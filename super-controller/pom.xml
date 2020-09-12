@@ -22,7 +22,6 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -32,7 +31,7 @@
     </dependency>
     <dependency>
       <groupId>com.xtkj</groupId>
-      <artifactId>super-controller</artifactId>
+      <artifactId>super-service</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -42,6 +41,22 @@
   </dependencies>
 
   <build>
+  <resources>
+    <!--扫描resource下的.xml文件-->
+    <resource>
+      <directory>src/main/resources</directory>
+      <includes>
+        <include>*.xml</include>
+      </includes>
+    </resource>
+    <!--扫描resource下的.properties文件-->
+    <resource>
+      <directory>src/main/resources</directory>
+      <includes>
+        <include>*.properties</include>
+      </includes>
+    </resource>
+  </resources>
     <finalName>super-controller</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
