@@ -1,4 +1,4 @@
-package interceptor;
+package com.xtkj.interceptor;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -20,6 +20,11 @@ public class BankInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        Object user = request.getSession().getAttribute("USER");
+        if (user==null){
+             response.getWriter().println("{\"msg\":\"凭证过期 请从新登入！\"}");
+             return false;
+        }
         return super.preHandle(request, response, handler);
     }
 

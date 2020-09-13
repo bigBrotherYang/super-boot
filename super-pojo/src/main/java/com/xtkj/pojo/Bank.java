@@ -1,13 +1,12 @@
 package com.xtkj.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 @Data
+@TableName("bank")
 public class Bank {
-    @TableId("b_id")
+    @TableId(value = "b_id",type = IdType.AUTO)
     private int id;
     @TableField("b_name")
     private String name;

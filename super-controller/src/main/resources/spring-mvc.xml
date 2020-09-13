@@ -22,4 +22,14 @@
         <property name="prefix" value="/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/bank/loginOut"/>
+            <mvc:exclude-mapping path="/bank/login"/>
+            <mvc:exclude-mapping path="/bank/home"/>
+            <bean  class="com.xtkj.interceptor.BankInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
