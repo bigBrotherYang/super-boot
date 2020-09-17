@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xtkj.dao.TPreMapper">
-
+    <resultMap id="BaseResult" type="com.xtkj.pojo.TPre">
+        <id column="pre_id" property="preId"/>
+        <result column="pre_name" property="preName"/>
+        <result column="pre_url" property="preUrl"/>
+    </resultMap>
+    <select id="getPreByRoleId" resultMap="BaseResult">
+        select p.* from tb_pre p join tb_role_pre rp
+        on p.pre_id = rp.pre_id
+        where rp.role_id = #{id}
+    </select>
 </mapper>

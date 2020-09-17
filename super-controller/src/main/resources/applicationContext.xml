@@ -55,4 +55,5 @@
     </bean>
     <bean class="com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor"/>
     <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    <import resource="classpath:spring-security.xml"/>
 </beans>

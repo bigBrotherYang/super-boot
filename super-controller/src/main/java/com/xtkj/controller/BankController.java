@@ -6,6 +6,8 @@ import com.xtkj.pojo.TUser;
 import com.xtkj.service.IBankService;
 import com.xtkj.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,30 +21,11 @@ public class BankController {
     private IBankService bankService;
     @Autowired
     private IUserService userService;
+
     @RequestMapping("/getBanks")
     private List<Bank> getBanks(){
         return bankService.list();
     }
 
-    @RequestMapping("/bank/login")
-    public String login(String userId, String userPwd, HttpSession session){
-        String json = "";
-        QueryWrapper<TUser> wrapper = new QueryWrapper<>();
-        wrapper.eq("userName",userId).eq("password",userPwd);
-        TUser one = userService.getOne(wrapper);
-        if (one!=null){
-            session.setAttribute("USER",one);
-            json="{\"msg\",\"登入成功允许跳转\"}";
-        }else{
-            json="{\"msg\",\"登入帐号或者密码错误\"}";
-        }
-        return json;
-    }
 
-    @RequestMapping("/bank/loginOut")
-    public String loginOut(HttpSession session){
-        session.invalidate();
-
-        return "{\"msg\",\"退出成功\"}";
-    }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/security
+        https://www.springframework.org/schema/security/spring-security.xsd">
+
+    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <!--第一次放开会创建一张表 存token-->
+<!--        <property name="createTableOnStartup" value="true"/>-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+   <security:http auto-config="true" use-expressions="true" >
+        <security:intercept-url pattern="/login.jsp" access="permitAll()"/>
+        <security:intercept-url pattern="/getBanks" access="hasAuthority('contract')"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+       <security:form-login
+                login-page="/login.jsp"
+                login-processing-url="/login"
+                default-target-url="/index.jsp"
+                username-parameter="userName"
+                password-parameter="userPwd"
+                authentication-failure-handler-ref="jsonAuthenticationEntryPoint"/>
+
+
+       <security:logout
+                logout-url="/logout"
+                logout-success-url="/login.jsp"/>
+        <security:remember-me
+                token-repository-ref="jdbcTokenRepository"
+                token-validity-seconds="1209600"/>
+        <security:access-denied-handler ref="myAccessDenied"/>
+    </security:http>
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="userServiceImpl" >
+
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+
+</beans>
